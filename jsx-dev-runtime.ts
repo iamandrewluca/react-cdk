@@ -19,6 +19,6 @@ declare global {
     namespace JSX {
         interface Element extends JSXInfo.Element<any, any> { }
         interface ElementClass extends JSXInfo.Component<any> {}
-        interface ElementAttributesProperty { props: never; }
+        interface ElementAttributesProperty { props: {}; }
     }
 }

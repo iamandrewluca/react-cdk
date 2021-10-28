@@ -1,8 +1,17 @@
 import { Construct } from 'constructs'
 
-class MyConstruct extends Construct {}
+interface ConstructWithProps<Props> {
+    props: Props
+}
 
-const element = <MyConstruct  />
+interface MyConstructOptions {
+    life: number
+}
+class MyConstruct extends Construct implements ConstructWithProps<MyConstructOptions> {
+    props: MyConstructOptions
+}
+
+const element = <MyConstruct life={42} />
 
 console.log(element);
 
