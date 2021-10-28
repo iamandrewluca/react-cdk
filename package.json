@@ -1,0 +1,16 @@
+{
+  "name": "react-constructs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Andrew Luca",
+  "license": "ISC",
+  "dependencies": {
+    "constructs": "^3.3.161",
+    "ts-node": "^10.4.0"
+  }
+}
