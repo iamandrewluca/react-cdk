@@ -1,7 +1,7 @@
 /* @jsx createElement */
 // ^^^^^^^^^^^^^^^^^^
 //          this is called JSX pragma
-//          it tells that function to use for creating JSX elements
+//          it tells what function to use for creating JSX elements
 
 /** This function is called everytime a JSX `<Example />` is encountered */
 const createElement = (type, props, ...children) => ({type, props, children});

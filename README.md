@@ -3,6 +3,13 @@
 - https://github.com/aws/aws-cdk-rfcs/issues/256
 - https://github.com/aws/aws-cdk-rfcs/pull/258
 
+## Instructions
+
+```shell
+npm install
+npx test
+```
+
 ## TODO
 
 - compare React.Component with Construct

@@ -4,6 +4,9 @@
   "description": "",
   "author": "Andrew Luca",
   "license": "ISC",
+  "scripts": {
+    "test": "babel-node index.js"
+  },
   "dependencies": {
     "@babel/core": "^7.15.8",
     "@babel/node": "^7.15.8",
