@@ -1,14 +1,18 @@
-import { Construct } from 'constructs'
+import {Construct, ConstructOptions } from 'constructs'
 
 interface ConstructWithProps<Props> {
     props: Props
 }
 
-interface MyConstructOptions {
+interface MyConstructOptions extends ConstructOptions {
     life: number
 }
 class MyConstruct extends Construct implements ConstructWithProps<MyConstructOptions> {
     props: MyConstructOptions
+
+    constructor(scope: Construct, id: string, options: MyConstructOptions) {
+        super(scope, id, options);
+    }
 }
 
 const element = <MyConstruct life={42} />
