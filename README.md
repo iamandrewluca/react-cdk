@@ -7,7 +7,7 @@
 
 ```shell
 npm install
-npx test
+npm test
 ```
 
 ## TODO
@@ -24,6 +24,7 @@ npx test
 
 ## Links
 
+- https://dev.to/iamandrewluca/jsx-at-lowest-level-371b
 - https://www.thisdot.co/blog/how-to-create-a-custom-react-renderer
 - https://github.com/aws/aws-cdk/blob/master/packages/%40aws-cdk/core/lib/stage.ts
 - https://github.com/aws/aws-cdk/tree/master/packages/decdk
