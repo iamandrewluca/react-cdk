@@ -1,3 +1,8 @@
+## RFC
+
+- https://github.com/aws/aws-cdk-rfcs/issues/256
+- https://github.com/aws/aws-cdk-rfcs/pull/258
+
 ## TODO
 
 - compare React.Component with Construct
@@ -13,7 +18,6 @@
 ## Links
 
 - https://www.thisdot.co/blog/how-to-create-a-custom-react-renderer
-- https://github.com/aws/aws-cdk-rfcs/pull/258/files
 - https://github.com/aws/aws-cdk/blob/master/packages/%40aws-cdk/core/lib/stage.ts
 - https://github.com/aws/aws-cdk/tree/master/packages/decdk
 - https://github.com/aws/aws-cdk
