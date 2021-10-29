@@ -13,7 +13,10 @@ const Fragment = ({children}) => children
 /** This will detect a Construct of other element types */
 const isConstruct = type => Construct.isPrototypeOf(type) || type === Construct
 
-/** This function takes an element tree and converts it to a constructs tree */
+/**
+ * This function takes an element tree and converts it to a constructs tree
+ * for big element trees this can stack overflow ?!
+ */
 function render(element, parentConstruct) {
 	if (Array.isArray(element)) {
 		element.forEach(child => render(child, parentConstruct))
@@ -21,7 +24,7 @@ function render(element, parentConstruct) {
 	}
 
 	if (element.type === Fragment) {
-		element.props.children.forEach(child => render(child, parentConstruct))
+		render(element.props.children, parentConstruct)
 		return
 	}
 
@@ -29,7 +32,7 @@ function render(element, parentConstruct) {
 		const {key, children, ...rest} = element.props
 		const construct = new element.type(parentConstruct, key, rest)
 		console.log(Node.of(construct).path);
-		children.forEach(child => render(child, construct))
+		render(children, construct)
 		return
 	}
 
