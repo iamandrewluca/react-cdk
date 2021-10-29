@@ -3,6 +3,8 @@
 //          this is called JSX pragma
 //          it tells what function to use for creating JSX elements
 
+import {Construct, Node} from "constructs";
+
 /** This function is called everytime a JSX `<Example />` is encountered */
 const createElement = (type, props, ...children) => ({type, props: {...props, children}});
 
@@ -26,6 +28,7 @@ function render(element, parentConstruct) {
 	if (isConstruct(element.type)) {
 		const {key, children, ...rest} = element.props
 		const construct = new element.type(parentConstruct, key, rest)
+		console.log(Node.of(construct).path);
 		children.forEach(child => render(child, construct))
 		return
 	}
@@ -35,12 +38,12 @@ function render(element, parentConstruct) {
 	render(newElement, parentConstruct)
 }
 
-import {Construct} from "constructs";
-
 function FunctionExample({children}) {
 	return (
 		<Fragment>
+			{/* Path: top-construct/construct-from-function-1 */}
 			<Construct key="construct-from-function-1"/>
+			{/* Path: top-construct/construct-from-function-2 */}
 			<Construct key="construct-from-function-2">
 				{children}
 			</Construct>
@@ -49,9 +52,13 @@ function FunctionExample({children}) {
 }
 
 const element = (
+	// Path: top-construct
 	<Construct key="top-construct">
 		<FunctionExample>
-			<Construct key="inner-construct"/>
+			{/* Path: top-construct/construct-from-function-2/inner-construct-1 */}
+			<Construct key="inner-construct-1"/>
+			{/* Path: top-construct/construct-from-function-2/inner-construct-2 */}
+			<Construct key="inner-construct-2"/>
 		</FunctionExample>
 	</Construct>
 )
