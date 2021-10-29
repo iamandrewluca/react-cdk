@@ -33,9 +33,15 @@ function render(element, parentConstruct) {
 		return
 	}
 
-	const {type, props} = element
-	const newElement = type(props)
-	render(newElement, parentConstruct)
+	// Keep this below isConstruct check
+	if (element.type instanceof Function) {
+		const {type, props} = element
+		const newElement = type(props)
+		render(newElement, parentConstruct)
+		return
+	}
+
+	throw new Error(`${element.type} is not supported`)
 }
 
 function FunctionExample({children}) {
