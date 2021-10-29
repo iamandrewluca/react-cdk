@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/react-constructs.iml" filepath="$PROJECT_DIR$/.idea/react-constructs.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/constructs-jsx.iml" filepath="$PROJECT_DIR$/.idea/react-constructs.iml" />
     </modules>
   </component>
 </project>

@@ -33,7 +33,17 @@ function render(element, parentConstruct) {
 
 	if (isConstruct(element.type)) {
 		const {key, children, ...rest} = element.props
-		const construct = new element.type(parentConstruct, key, rest)
+
+		/**
+		 * App from @aws-cdk/core does not exactly follow Construct constructor
+		 * https://github.com/aws/aws-cdk/blob/0d7452ee3ce22179242241ed85cf55a173af19b5/packages/%40aws-cdk/core/lib/app.ts#L108
+		 * try to handle it here
+		 */
+		const construct = element.type.length === 1
+			// constructor that has only props (e.g. @aws-cdk/core/App)
+			? new element.type(rest)
+			// normal Construct constructor
+			: new element.type(parentConstruct, key, rest)
 		console.log(Node.of(construct).path);
 		render(children, construct)
 		return parentConstruct ?? construct
@@ -46,7 +56,7 @@ function render(element, parentConstruct) {
 		return render(newElement, parentConstruct)
 	}
 
-	throw new Error(`${element.type} is not supported`)
+	throw new Error(`${element.type ?? element} is not supported`)
 }
 
 function FunctionExample({children}) {
@@ -62,7 +72,14 @@ function FunctionExample({children}) {
 	)
 }
 
-class App extends Construct {}
+/**
+ * Simulate @aws-cdk/core/App with only one constructor argument
+ */
+class App extends Construct {
+	constructor(props) {
+		super(undefined, '', props);
+	}
+}
 
 const element = (
 	//	Path: top-construct
@@ -77,17 +94,12 @@ const element = (
 )
 
 {
-	/**
-	 * App from @aws-cdk/core does not exactly follow Construct constructor
-	 * https://github.com/aws/aws-cdk/blob/0d7452ee3ce22179242241ed85cf55a173af19b5/packages/%40aws-cdk/core/lib/app.ts#L108
-	 * So this will not be possible
-	 */
 	const app = render(<App>{element}</App>)
 	console.log(app);
 }
 
 {
-	const app = new App(undefined, undefined)
+	const app = new App(undefined)
 	const output = render(element, app)
 	console.log(app);
 	console.log(app === output);
