@@ -34,3 +34,44 @@ npm test
 - https://github.com/DefinitelyTyped/DefinitelyTyped/blob/master/types/react/index.d.ts
 - https://javascript.info/instanceof
 - https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/isPrototypeOf
+
+## Possible example
+
+```tsx
+import { Topic } from '@aws-cdk/aws-sns';
+import { SqsSubscription } from '@aws-cdk/aws-sns-subscriptions';
+import { Queue } from '@aws-cdk/aws-sqs';
+import { Stack, App, StackProps, Duration } from '@aws-cdk/core';
+
+export class HelloCdkStackImperative extends Stack {
+  constructor(scope: App, id: string, props?: StackProps) {
+    super(scope, id, props);
+
+    const queue = new Queue(this, 'HelloCdkQueue', {
+      visibilityTimeout: Duration.seconds(300),
+    });
+
+    const topic = new Topic(this, 'HelloCdkTopic');
+
+    topic.addSubscription(new SqsSubscription(queue));
+  }
+}
+
+const React = {}
+function useEffect(...args: any[]): any {}
+function useRef(...args: any[]): any {}
+
+function HelloCdkStackDeclarative(props: any) {
+  const queue: Queue = useRef()
+  const topic: Topic = useRef()
+
+  useEffect(() => topic.addSubscription(new SqsSubscription(queue)))
+
+  return (
+    <Stack {...props}>
+      <Queue ref={queue} visibilityTimeout={Duration.seconds(300)} />
+      <Topic ref={topic} />
+    </Stack>
+  )
+}
+```
