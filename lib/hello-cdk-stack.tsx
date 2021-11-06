@@ -5,6 +5,7 @@ import * as subs from "@aws-cdk/aws-sns-subscriptions";
 import * as sqs from "@aws-cdk/aws-sqs";
 import * as cdk from "@aws-cdk/core";
 import { useLayoutEffect, useRef } from "react";
+import { Queue, Stack, Topic } from "./types";
 
 export class _HelloCdkStack extends cdk.Stack {
   constructor(scope: cdk.App, id: string, props?: cdk.StackProps) {
@@ -30,13 +31,13 @@ export function HelloCdkStack(props) {
   }, []);
 
   return (
-    <cdk.Stack {...props}>
-      <sqs.Queue
+    <Stack {...props}>
+      <Queue
         ref={queue}
         key="HelloCdkQueue"
         visibilityTimeout={cdk.Duration.seconds(300)}
       />
-      <sns.Topic ref={topic} key="HelloCdkTopic" />
-    </cdk.Stack>
+      <Topic ref={topic} key="HelloCdkTopic" />
+    </Stack>
   );
 }

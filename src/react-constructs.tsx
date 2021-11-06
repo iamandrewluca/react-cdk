@@ -1,22 +1,47 @@
+// @ts-nocheck
 import { Construct } from "@aws-cdk/core";
 import { ReactNode } from "react";
 import * as Reconciler from "react-reconciler";
+import { map } from "../lib/types";
 
-// @ts-ignore
 const Renderer = Reconciler({
   supportsHydration: false,
-  supportsMutation: false,
-  supportsPersistence: false,
-  getRootHostContext() {
-    return {};
+  supportsMutation: true,
+  supportsPersistence: true,
+
+  getRootHostContext(nextRootInstance) {
+    return nextRootInstance;
   },
   prepareForCommit() {
     return null;
   },
   resetAfterCommit() {},
-  createInstance(type, props, rootContainer, hostContext, internalHandle) {
-    console.log(arguments);
-    return {};
+  getChildHostContext(context, type, rootInstance) {
+    // console.log({ type });
+    return context;
+  },
+  shouldSetTextContent() {
+    return false;
+  },
+  createInstance(
+    type,
+    newProps,
+    rootContainerInstance,
+    currentHostContext,
+    workInProgress
+  ) {
+    console.log({ type });
+    const Construct = map[type];
+    return new Construct(undefined, Math.random().toString(), newProps);
+  },
+  finalizeInitialChildren() {
+    return false;
+  },
+  appendInitialChild() {},
+  clearContainer() {},
+  appendChildToContainer() {},
+  getPublicInstance(instance) {
+    return instance;
   },
 });
 
