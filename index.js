@@ -13,6 +13,7 @@ const createElement = (type, props, ...children) => ({
 
 const Fragment = ({ children }) => children;
 const useRef = (init) => ({ current: init });
+const createRef = useRef;
 
 const effectQueue = [];
 const useLayoutEffect = (cb) => effectQueue.push(cb);
@@ -20,6 +21,8 @@ const useLayoutEffect = (cb) => effectQueue.push(cb);
 /** This will detect a Construct of other element types */
 const isConstruct = (type) =>
   Construct.isPrototypeOf(type) || type === Construct;
+
+const logPath = (c) => console.log(Node.of(c).path);
 
 /**
  * This function takes an element tree and converts it to a constructs tree
@@ -58,7 +61,7 @@ function render(element, parentConstruct) {
 
     ref.current = construct;
 
-    // console.log(Node.of(construct).path);
+    logPath(construct);
 
     render(children, construct);
     return parentConstruct ?? construct;
@@ -83,24 +86,22 @@ function render(element, parentConstruct) {
   throw new Error(`${element.type ?? element} is not supported`);
 }
 
-function FunctionExample({ children }) {
+function FunctionExample({ children, ...rest }) {
   const c1 = useRef();
   const c2 = useRef();
 
   useLayoutEffect(() => {
-    console.log(Node.of(c1.current).path);
-    console.log(Node.of(c2.current).path);
+    logPath(c1.current);
+    logPath(c2.current);
   });
 
   return (
-    <Fragment>
-      {/* Path: top-construct/construct-from-function-1 */}
+    <Construct {...rest} key="FunctionExampleConstruct">
       <Construct ref={c1} key="construct-from-function-1" />
-      {/* Path: top-construct/construct-from-function-2 */}
       <Construct ref={c2} key="construct-from-function-2">
         {children}
       </Construct>
-    </Fragment>
+    </Construct>
   );
 }
 
@@ -113,26 +114,18 @@ class App extends Construct {
   }
 }
 
-const element = (
-  //	Path: top-construct
-  <Construct key="top-construct">
-    <FunctionExample>
-      {/* Path: top-construct/construct-from-function-2/inner-construct-1 */}
-      <Construct key="inner-construct-1" />
-      {/* Path: top-construct/construct-from-function-2/inner-construct-2 */}
-      <Construct key="inner-construct-2" />
-    </FunctionExample>
-  </Construct>
+const appRef = createRef();
+const fnRef = createRef();
+
+const app = render(
+  <App ref={appRef}>
+    <Construct key="top-construct">
+      <FunctionExample ref={fnRef}>
+        <Construct key="inner-construct-1" />
+        <Construct key="inner-construct-2" />
+      </FunctionExample>
+    </Construct>
+  </App>
 );
 
-{
-  const app = render(<App>{element}</App>);
-  console.log(app);
-}
-
-{
-  const app = new App(undefined);
-  const output = render(element, app);
-  console.log(app);
-  console.log(app === output);
-}
+console.log(app === appRef.current);
