@@ -12,6 +12,10 @@ const createElement = (type, props, ...children) => ({
 });
 
 const Fragment = ({ children }) => children;
+const useRef = (init) => ({ current: init });
+
+const effectQueue = [];
+const useLayoutEffect = (cb) => effectQueue.push(cb);
 
 /** This will detect a Construct of other element types */
 const isConstruct = (type) =>
@@ -38,7 +42,7 @@ function render(element, parentConstruct) {
   }
 
   if (isConstruct(element.type)) {
-    const { key, children, ...rest } = element.props;
+    const { key, ref = {}, children, ...rest } = element.props;
 
     /**
      * App from @aws-cdk/core does not exactly follow Construct constructor
@@ -51,7 +55,11 @@ function render(element, parentConstruct) {
           new element.type(rest)
         : // normal Construct constructor
           new element.type(parentConstruct, key, rest);
-    console.log(Node.of(construct).path);
+
+    ref.current = construct;
+
+    // console.log(Node.of(construct).path);
+
     render(children, construct);
     return parentConstruct ?? construct;
   }
@@ -59,20 +67,39 @@ function render(element, parentConstruct) {
   // Keep this below isConstruct check
   if (element.type instanceof Function) {
     const { type, props } = element;
+
+    const beforeEffectsCount = effectQueue.length;
     const newElement = type(props);
-    return render(newElement, parentConstruct);
+    const afterEffectsCount = effectQueue.length;
+    const iterable = { length: afterEffectsCount - beforeEffectsCount };
+
+    const construct = render(newElement, parentConstruct);
+
+    Array.from(iterable, () => effectQueue.pop()());
+
+    return construct;
   }
 
   throw new Error(`${element.type ?? element} is not supported`);
 }
 
 function FunctionExample({ children }) {
+  const c1 = useRef();
+  const c2 = useRef();
+
+  useLayoutEffect(() => {
+    console.log(Node.of(c1.current).path);
+    console.log(Node.of(c2.current).path);
+  });
+
   return (
     <Fragment>
       {/* Path: top-construct/construct-from-function-1 */}
-      <Construct key="construct-from-function-1" />
+      <Construct ref={c1} key="construct-from-function-1" />
       {/* Path: top-construct/construct-from-function-2 */}
-      <Construct key="construct-from-function-2">{children}</Construct>
+      <Construct ref={c2} key="construct-from-function-2">
+        {children}
+      </Construct>
     </Fragment>
   );
 }
