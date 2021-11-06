@@ -21,7 +21,9 @@
     "strictPropertyInitialization": false,
     "typeRoots": [
       "./node_modules/@types"
-    ]
+    ],
+    "jsx": "react-jsx",
+    "jsxImportSource": "jsx"
   },
   "exclude": [
     "node_modules",
