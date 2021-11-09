@@ -4,9 +4,13 @@ export function Fragment({ children }: { children: JSX.Element[] }) {
   return children;
 }
 
+interface RefObject<T> {
+  readonly current: T | null;
+}
+
 export const createRef = useRef;
-export function useRef<Current>(current?: Current) {
-  return { current };
+export function useRef<T>(initialValue: T | null): RefObject<T> {
+  return { current: initialValue };
 }
 
 const effectQueue: Array<() => void> = [];

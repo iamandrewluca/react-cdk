@@ -21,10 +21,26 @@ declare namespace ReactCDK {
     props: P;
     key: Key | null;
   }
+
+  interface RefObject<T> {
+    readonly current: T | null;
+  }
+  type Ref<T> = RefObject<T> | null;
+
+  interface Attributes {
+    key?: Key | null | undefined;
+  }
+
+  interface ClassAttributes<T> extends Attributes {
+    ref?: Ref<T> | undefined;
+  }
 }
 
 declare global {
   namespace JSX {
     interface Element extends ReactCDK.ReactElement<any, any> {}
+
+    interface IntrinsicAttributes extends ReactCDK.Attributes {}
+    interface IntrinsicClassAttributes<T> extends ReactCDK.ClassAttributes<T> {}
   }
 }

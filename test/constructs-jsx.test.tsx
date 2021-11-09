@@ -5,7 +5,7 @@ import { createRef, render } from "../src/constructs-jsx";
 
 test("SQS Queue Created", () => {
   // Arrange
-  const stack = createRef<cdk.Stack>();
+  const stack = createRef<cdk.Stack>(null);
 
   // Act
   render(<ConstructsJsxStack ref={stack} />, new cdk.App());
@@ -20,7 +20,7 @@ test("SQS Queue Created", () => {
 
 test("SNS Topic Created", () => {
   // Arrange
-  const stack = createRef<cdk.Stack>();
+  const stack = createRef<cdk.Stack>(null);
 
   // Act
   render(<ConstructsJsxStack ref={stack} />, new cdk.App());

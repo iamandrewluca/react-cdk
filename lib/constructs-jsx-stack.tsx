@@ -6,8 +6,8 @@ import * as cdk from "@aws-cdk/core";
 import { useLayoutEffect, useRef } from "../src/constructs-jsx";
 
 export function ConstructsJsxStack(props: any) {
-  const queue = useRef<sqs.Queue>();
-  const topic = useRef<sns.Topic>();
+  const queue = useRef<sqs.Queue>(null);
+  const topic = useRef<sns.Topic>(null);
 
   useLayoutEffect(() => {
     // Fake check, in effect refs are always resolved
