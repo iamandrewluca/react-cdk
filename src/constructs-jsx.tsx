@@ -1,28 +1,31 @@
-// @ts-nocheck
-import { Construct, Node } from "constructs";
+import { Construct, IConstruct } from "constructs";
 
-export const Fragment = ({ children }) => children;
-export const useRef = (init?) => ({ current: init });
+export function Fragment({ children }: { children: JSX.Element[] }) {
+  return children;
+}
+
 export const createRef = useRef;
+export function useRef<Current>(current?: Current) {
+  return { current };
+}
 
-const effectQueue = [];
-export const useLayoutEffect = (cb) => effectQueue.push(cb);
+const effectQueue: Array<() => void> = [];
+export function useLayoutEffect(effect: () => void) {
+  effectQueue.push(effect);
+}
 
-const isConstruct = (type) =>
-  Construct.isPrototypeOf(type) || type === Construct;
+function isConstruct(type: unknown): type is typeof Construct {
+  return Construct.isPrototypeOf(type as IConstruct) || type === Construct;
+}
 
-const logPath = (c) => console.log(Node.of(c).path);
-
-export function render(element, parentConstruct?) {
+export function render(element: JSX.Element, parentConstruct: Construct) {
   return visit(element, parentConstruct);
 
-  function visit(element, parentConstruct, index = 0) {
-    if (Array.isArray(element) && parentConstruct === undefined) {
-      throw new Error(
-        "rendering an array of construct elements needs a parentConstruct"
-      );
-    }
-
+  function visit(
+    element: JSX.Element | JSX.Element[],
+    parentConstruct: Construct,
+    index = 0
+  ): Construct {
     if (Array.isArray(element)) {
       element.forEach((child, index) => visit(child, parentConstruct, index));
       return parentConstruct;
@@ -33,35 +36,34 @@ export function render(element, parentConstruct?) {
     }
 
     if (isConstruct(element.type)) {
-      const {
-        key = `${element.type.name}-${index}`,
-        ref = {},
-        children,
-        ...rest
-      } = element.props;
+      const { key, props, type } = element;
+      const { ref, children, ...options } = props;
 
-      const construct =
-        element.type.length === 1
-          ? new element.type(rest)
-          : new element.type(parentConstruct, key, rest);
+      const construct = new type(
+        parentConstruct,
+        key ?? `${type.name}-${index}`,
+        options
+      );
 
-      ref.current = construct;
+      if (ref) ref.current = construct;
 
-      visit(children, construct);
-      return parentConstruct ?? construct;
+      if (children) visit(children, construct);
+      return parentConstruct;
     }
 
     if (element.type instanceof Function) {
-      const { type, props } = element;
-
+      const { type, props, key } = element;
       const beforeEffectsCount = effectQueue.length;
-      const newElement = type(props);
+      const newElement = type({ ...props, key });
       const afterEffectsCount = effectQueue.length;
       const iterable = { length: afterEffectsCount - beforeEffectsCount };
 
       const construct = visit(newElement, parentConstruct);
 
-      Array.from(iterable, () => effectQueue.pop()());
+      Array.from(iterable, () => {
+        const effect = effectQueue.pop();
+        if (effect) effect();
+      });
 
       return construct;
     }

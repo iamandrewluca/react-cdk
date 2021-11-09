@@ -4,15 +4,14 @@ import { ConstructsJsxStack } from "../lib/constructs-jsx-stack";
 import { createRef, render } from "../src/constructs-jsx";
 
 test("SQS Queue Created", () => {
-  const stack = createRef();
-  // WHEN
-  render(
-    <cdk.App>
-      <ConstructsJsxStack ref={stack} />
-    </cdk.App>
-  );
-  // THEN
-  expectCDK(stack.current).to(
+  // Arrange
+  const stack = createRef<cdk.Stack>();
+
+  // Act
+  render(<ConstructsJsxStack ref={stack} />, new cdk.App());
+
+  // Assert
+  expectCDK(stack.current!).to(
     haveResource("AWS::SQS::Queue", {
       VisibilityTimeout: 300,
     })
@@ -20,13 +19,12 @@ test("SQS Queue Created", () => {
 });
 
 test("SNS Topic Created", () => {
-  const stack = createRef();
-  // WHEN
-  render(
-    <cdk.App>
-      <ConstructsJsxStack ref={stack} />
-    </cdk.App>
-  );
-  // THEN
-  expectCDK(stack.current).to(haveResource("AWS::SNS::Topic"));
+  // Arrange
+  const stack = createRef<cdk.Stack>();
+
+  // Act
+  render(<ConstructsJsxStack ref={stack} />, new cdk.App());
+
+  // Assert
+  expectCDK(stack.current!).to(haveResource("AWS::SNS::Topic"));
 });

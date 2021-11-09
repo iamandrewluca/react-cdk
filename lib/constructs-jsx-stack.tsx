@@ -5,11 +5,14 @@ import * as sqs from "@aws-cdk/aws-sqs";
 import * as cdk from "@aws-cdk/core";
 import { useLayoutEffect, useRef } from "../src/constructs-jsx";
 
-export function ConstructsJsxStack(props) {
-  const queue = useRef();
-  const topic = useRef();
+export function ConstructsJsxStack(props: any) {
+  const queue = useRef<sqs.Queue>();
+  const topic = useRef<sns.Topic>();
 
   useLayoutEffect(() => {
+    // Fake check, in effect refs are always resolved
+    if (!queue.current || !topic.current) return;
+
     const subscription = new subs.SqsSubscription(queue.current);
     topic.current.addSubscription(subscription);
   });
