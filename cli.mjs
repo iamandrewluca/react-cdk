@@ -6,23 +6,31 @@ const [_node, _main, libraryName] = process.argv;
 const constructNames = await import(libraryName)
   .then(Object.entries)
   .then((e) => e.filter(([_, type]) => isConstruct(type)))
-  .then((e) => e.map(([name]) => name));
+  .then((e) =>
+    e.map(([name, type]) => {
+      const hasProps = type.length === 1 || type.length === 3;
+      //   console.log(name, hasProps, type.length);
+      return { name, arity: type.length };
+    })
+  );
 
 const propsImports = constructNames
-  .map((name) => `import { ${name}Props } from "${libraryName}"`)
+  .filter((c) => c.arity === 3)
+  .map((c) => `import { ${c.name}Props } from "${libraryName}"`)
   .join("\n");
 
 const exports = constructNames
-  .map((name) => `export const ${name} = "${libraryName}.${name}"`)
+  .map((c) => `export const ${c.name} = "${libraryName}.${c.name}"`)
   .join("\n");
 
 const intrinsicElements = constructNames
-  .map((name) => `			[${name}]: ${name}Props`)
+  .map((c) =>
+    c.arity === 3 ? `[${c.name}]: ${c.name}Props` : `[${c.name}]: {}`
+  )
+  .map((ie) => `			${ie}`)
   .join("\n");
 
-const ts = String.raw;
-
-const JSX = ts`
+const JSX = `
 declare global {
 	namespace JSX {
 		interface IntrinsicElements {

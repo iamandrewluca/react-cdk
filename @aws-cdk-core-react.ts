@@ -1,38 +1,22 @@
 
-import { AppProps } from "@aws-cdk/core"
 import { AssetStagingProps } from "@aws-cdk/core"
 import { CfnCodeDeployBlueGreenHookProps } from "@aws-cdk/core"
 import { CfnConditionProps } from "@aws-cdk/core"
 import { CfnCustomResourceProps } from "@aws-cdk/core"
-import { CfnElementProps } from "@aws-cdk/core"
 import { CfnHookProps } from "@aws-cdk/core"
 import { CfnIncludeProps } from "@aws-cdk/core"
 import { CfnJsonProps } from "@aws-cdk/core"
 import { CfnMacroProps } from "@aws-cdk/core"
-import { CfnMappingProps } from "@aws-cdk/core"
-import { CfnModuleDefaultVersionProps } from "@aws-cdk/core"
 import { CfnModuleVersionProps } from "@aws-cdk/core"
 import { CfnOutputProps } from "@aws-cdk/core"
-import { CfnParameterProps } from "@aws-cdk/core"
-import { CfnPublicTypeVersionProps } from "@aws-cdk/core"
 import { CfnPublisherProps } from "@aws-cdk/core"
-import { CfnRefElementProps } from "@aws-cdk/core"
 import { CfnResourceProps } from "@aws-cdk/core"
-import { CfnResourceDefaultVersionProps } from "@aws-cdk/core"
 import { CfnResourceVersionProps } from "@aws-cdk/core"
 import { CfnRuleProps } from "@aws-cdk/core"
 import { CfnStackProps } from "@aws-cdk/core"
 import { CfnStackSetProps } from "@aws-cdk/core"
-import { CfnTypeActivationProps } from "@aws-cdk/core"
-import { CfnWaitConditionProps } from "@aws-cdk/core"
-import { CfnWaitConditionHandleProps } from "@aws-cdk/core"
-import { ConstructProps } from "@aws-cdk/core"
 import { CustomResourceProps } from "@aws-cdk/core"
 import { CustomResourceProviderProps } from "@aws-cdk/core"
-import { NestedStackProps } from "@aws-cdk/core"
-import { ResourceProps } from "@aws-cdk/core"
-import { StackProps } from "@aws-cdk/core"
-import { StageProps } from "@aws-cdk/core"
 
 export const App = "@aws-cdk/core.App"
 export const AssetStaging = "@aws-cdk/core.AssetStaging"
@@ -72,40 +56,40 @@ export const Stage = "@aws-cdk/core.Stage"
 declare global {
 	namespace JSX {
 		interface IntrinsicElements {
-			[App]: AppProps
+			[App]: {}
 			[AssetStaging]: AssetStagingProps
 			[CfnCodeDeployBlueGreenHook]: CfnCodeDeployBlueGreenHookProps
 			[CfnCondition]: CfnConditionProps
 			[CfnCustomResource]: CfnCustomResourceProps
-			[CfnElement]: CfnElementProps
+			[CfnElement]: {}
 			[CfnHook]: CfnHookProps
 			[CfnInclude]: CfnIncludeProps
 			[CfnJson]: CfnJsonProps
 			[CfnMacro]: CfnMacroProps
-			[CfnMapping]: CfnMappingProps
-			[CfnModuleDefaultVersion]: CfnModuleDefaultVersionProps
+			[CfnMapping]: {}
+			[CfnModuleDefaultVersion]: {}
 			[CfnModuleVersion]: CfnModuleVersionProps
 			[CfnOutput]: CfnOutputProps
-			[CfnParameter]: CfnParameterProps
-			[CfnPublicTypeVersion]: CfnPublicTypeVersionProps
+			[CfnParameter]: {}
+			[CfnPublicTypeVersion]: {}
 			[CfnPublisher]: CfnPublisherProps
-			[CfnRefElement]: CfnRefElementProps
+			[CfnRefElement]: {}
 			[CfnResource]: CfnResourceProps
-			[CfnResourceDefaultVersion]: CfnResourceDefaultVersionProps
+			[CfnResourceDefaultVersion]: {}
 			[CfnResourceVersion]: CfnResourceVersionProps
 			[CfnRule]: CfnRuleProps
 			[CfnStack]: CfnStackProps
 			[CfnStackSet]: CfnStackSetProps
-			[CfnTypeActivation]: CfnTypeActivationProps
-			[CfnWaitCondition]: CfnWaitConditionProps
-			[CfnWaitConditionHandle]: CfnWaitConditionHandleProps
-			[Construct]: ConstructProps
+			[CfnTypeActivation]: {}
+			[CfnWaitCondition]: {}
+			[CfnWaitConditionHandle]: {}
+			[Construct]: {}
 			[CustomResource]: CustomResourceProps
 			[CustomResourceProvider]: CustomResourceProviderProps
-			[NestedStack]: NestedStackProps
-			[Resource]: ResourceProps
-			[Stack]: StackProps
-			[Stage]: StageProps
+			[NestedStack]: {}
+			[Resource]: {}
+			[Stack]: {}
+			[Stage]: {}
 		}
 	}
 }
