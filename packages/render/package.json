@@ -1,5 +1,8 @@
 {
 	"name": "@react-cdk/render",
 	"version": "0.0.1",
-	"type": "commonjs"
+	"type": "commonjs",
+	"dependencies": {
+		"constructs": "^10.0.43"
+	}
 }
