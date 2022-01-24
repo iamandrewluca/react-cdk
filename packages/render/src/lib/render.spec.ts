@@ -1,7 +1,7 @@
-import { render } from './render';
+import { render } from "./render";
 
-describe('render', () => {
-  it('should work', () => {
-    expect(render()).toEqual('render');
-  });
+describe("render", () => {
+	it("should work", () => {
+		expect(render()).toEqual("render");
+	});
 });

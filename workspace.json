@@ -1,6 +1,6 @@
 {
-  "version": 2,
-  "projects": {
-    "render": "packages/render"
-  }
+	"version": 2,
+	"projects": {
+		"render": "packages/render"
+	}
 }

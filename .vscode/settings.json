@@ -1,0 +1,8 @@
+{
+	"editor.formatOnSave": true,
+	"editor.renderWhitespace": "all",
+	"typescript.tsdk": "node_modules/typescript/lib",
+	"[typescript][typescriptreact][javascript][javascriptreact][html][json][jsonc][md]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode"
+	}
+}

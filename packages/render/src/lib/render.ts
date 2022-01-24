@@ -1,3 +1,3 @@
 export function render(): string {
-  return 'render';
+	return "render";
 }
