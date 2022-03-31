@@ -1,3 +1,10 @@
+# Declarative AWS CDK usin JSX (wip, multiple branches)
+
+RFC:
+
+- https://github.com/aws/aws-cdk-rfcs/issues/256
+- https://github.com/aws/aws-cdk-rfcs/pull/258
+
 # Welcome to your CDK TypeScript project!
 
 You should explore the contents of this project. It demonstrates a CDK app with an instance of a stack (`ConstructsJsxStack`)
