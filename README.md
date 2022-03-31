@@ -1,4 +1,4 @@
-# Declarative AWS CDK usin JSX (wip, multiple branches)
+# Declarative AWS CDK using JSX/TSX (wip, multiple branches)
 
 RFC:
 
